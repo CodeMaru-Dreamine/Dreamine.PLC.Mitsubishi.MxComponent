@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<PackageId>Dreamine.PLC.Mitsubishi.MxComponent</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>Dreamine Core Team</Authors>
+		<Company>Dreamine</Company>
+		<Description>Mitsubishi MX Component adapter for Dreamine PLC communication.</Description>
+		<PackageTags>dreamine;plc;mitsubishi;mxcomponent;communication;industrial-automation</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/CodeMaru-Dreamine/Dreamine.PLC.Mitsubishi.MxComponent</RepositoryUrl>
+		<Title>Dreamine.PLC.Mitsubishi.MxComponent</Title>
+		<Copyright>© 2026 Dreamine Core Team. All rights reserved.</Copyright>
+		<PackageProjectUrl>https://github.com/CodeMaru-Dreamine/Dreamine.PLC.FullKit</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>icon.png</PackageIcon>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="icon.png" Pack="true" PackagePath="\" />
+		<None Include="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Dreamine.PLC.Abstractions\Dreamine.PLC.Abstractions.csproj" />
+		<ProjectReference Include="..\Dreamine.PLC.Core\Dreamine.PLC.Core.csproj" />
+	</ItemGroup>
+
+</Project>
