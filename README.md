@@ -1,64 +1,26 @@
 # Dreamine.PLC.Mitsubishi.MxComponent
 
-This package provides a Mitsubishi MX Component adapter boundary for the Dreamine PLC communication stack.
+Mitsubishi MX Component adapter boundary for Dreamine PLC communication.
 
-## Purpose
+## Important vendor runtime notice
 
-`Dreamine.PLC.Mitsubishi.MxComponent` is part of the Dreamine PLC package family.
+This package must not redistribute Mitsubishi MX Component DLLs, installers, samples, or licensed runtime files.
 
-The package is designed to keep PLC communication code separated by responsibility:
+Users must install and license Mitsubishi MX Component separately according to Mitsubishi Electric's license terms.
 
-- Abstractions define contracts.
-- Core provides shared runtime infrastructure.
-- Vendor adapters implement device-specific communication.
-- WPF provides monitoring and diagnostic UI components.
+This package may only contain adapter code that integrates with a user-installed vendor runtime.
 
-## Features
+## Current status
 
-- MX Component adapter boundary
-- Vendor-specific connection option model
-- Dreamine.PLC.Core integration point
-- PLC read/write operation adapter structure
-- Isolation of vendor dependency from application layers
+This package is a vendor runtime adapter boundary and is not part of the current simulator-validated protocol line.
 
+Recommended production path:
 
-## Project References
-
-- `Dreamine.PLC.Abstractions`
-- `Dreamine.PLC.Core`
-
-## Target Framework
-
-```xml
-<TargetFramework>net8.0</TargetFramework>
-```
-
-## Package Metadata
-
-| Item | Value |
-|---|---|
-| PackageId | `Dreamine.PLC.Mitsubishi.MxComponent` |
-| Version | `1.0.0` |
-| License | `MIT` |
-| Repository | `https://github.com/CodeMaru-Dreamine/Dreamine.PLC.Mitsubishi.MxComponent` |
-| Project URL | `https://github.com/CodeMaru-Dreamine/Dreamine.PLC.FullKit` |
-
-## Architecture Rule
-
-This repository must not reference application-level projects.
-
-Dependency direction must remain one-way:
-
-```text
-Abstractions
-    ▲
-    │
-Core
-    ▲
-    │
-Vendor Adapter / WPF UI Component
-```
+- Use `Dreamine.PLC.Mitsubishi.MC` for direct MC TCP/UDP protocol communication.
+- Use this package only when a project explicitly requires MX Component integration.
 
 ## License
 
-This project is licensed under the MIT License.
+Dreamine adapter code: MIT License.
+
+Mitsubishi MX Component: not included and not licensed by this package.
