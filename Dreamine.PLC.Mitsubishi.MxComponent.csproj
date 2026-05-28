@@ -28,6 +28,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="System.ServiceModel.Primitives" />
 		<ProjectReference Include="..\PLC.Abstractions\Dreamine.PLC.Abstractions.csproj" />
 		<ProjectReference Include="..\PLC.Core\Dreamine.PLC.Core.csproj" />
 	</ItemGroup>
