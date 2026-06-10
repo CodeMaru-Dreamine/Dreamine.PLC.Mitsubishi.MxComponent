@@ -1,5 +1,7 @@
 # Dreamine.PLC.Mitsubishi.MxComponent
 
+[English documentation](./README.md)
+
 Dreamine PLC 통신을 위한 Mitsubishi MX Component 어댑터 경계 패키지입니다.
 
 ## 중요 벤더 런타임 안내

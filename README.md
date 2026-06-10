@@ -1,5 +1,7 @@
 # Dreamine.PLC.Mitsubishi.MxComponent
 
+[Korean documentation](./README_KO.md)
+
 Mitsubishi MX Component adapter boundary for Dreamine PLC communication.
 
 ## Important vendor runtime notice
