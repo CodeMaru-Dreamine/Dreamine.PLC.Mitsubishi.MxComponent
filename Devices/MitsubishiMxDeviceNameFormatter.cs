@@ -11,7 +11,10 @@ public static class MitsubishiMxDeviceNameFormatter
     /// <summary>
     /// Formats a PLC address for MX Component.
     /// </summary>
-    /// <param name="address">The PLC address.</param>
+    /// <param name="address">
+    /// The PLC address. <see cref="PlcAddress.Offset"/> is the normalized numeric offset;
+    /// X/Y/B/W offsets are rendered in hexadecimal for MX Component device names.
+    /// </param>
     /// <returns>The MX Component device string.</returns>
     public static string Format(PlcAddress address)
     {

@@ -77,28 +77,34 @@ public sealed class MitsubishiMxComponentPlcClient : PlcClientBase
         CancellationToken cancellationToken)
     {
         var component = RequireComponent();
-        var values = new bool[count];
+        var device = MitsubishiMxDeviceNameFormatter.Format(address);
+        var buffer = new short[count];
+        var args = new object?[] { device, count, buffer };
 
-        for (var index = 0; index < count; index++)
+        try
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var args = new object?[]
+            var resultCode = ComInvoker.ToReturnCode(ComInvoker.InvokeWithByRef(component, _options.ReadDeviceBlock2MethodName, args, 2));
+            if (resultCode == 0 && TryExtractBoolArray(args[2], count, out var values))
             {
-                MitsubishiMxDeviceNameFormatter.FormatOffset(address, index),
-                0
-            };
-
-            var resultCode = ComInvoker.ToReturnCode(ComInvoker.InvokeWithByRef(component, _options.ReadDeviceMethodName, args, 1));
-            if (resultCode != 0)
-            {
-                return Task.FromResult(PlcResult<bool[]>.Failure($"MX Component bit read failed. code={resultCode}", resultCode));
+                return Task.FromResult(PlcResult<bool[]>.Success(values));
             }
-
-            values[index] = Convert.ToInt32(args[1], CultureInfo.InvariantCulture) != 0;
+        }
+        catch (MissingMethodException)
+        {
+            // Fall back to GetDevice below for MX Component variants without block calls.
+        }
+        catch (COMException)
+        {
+            // COM late binding can reject array arguments. Fall back to GetDevice.
+        }
+        catch (InvalidOperationException ex) when (ex.InnerException is COMException)
+        {
+            // ComInvoker wraps COM target invocation failures. Fall back to GetDevice.
         }
 
-        return Task.FromResult(PlcResult<bool[]>.Success(values));
+        return ReadBitsOneByOne(component, address, count, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -259,6 +265,36 @@ public sealed class MitsubishiMxComponentPlcClient : PlcClientBase
         return Task.FromResult(PlcResult<short[]>.Success(values));
     }
 
+    private Task<PlcResult<bool[]>> ReadBitsOneByOne(
+        object component,
+        PlcAddress address,
+        int count,
+        CancellationToken cancellationToken)
+    {
+        var values = new bool[count];
+
+        for (var index = 0; index < count; index++)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var args = new object?[]
+            {
+                MitsubishiMxDeviceNameFormatter.FormatOffset(address, index),
+                0
+            };
+
+            var resultCode = ComInvoker.ToReturnCode(ComInvoker.InvokeWithByRef(component, _options.ReadDeviceMethodName, args, 1));
+            if (resultCode != 0)
+            {
+                return Task.FromResult(PlcResult<bool[]>.Failure($"MX Component bit read failed. code={resultCode}", resultCode));
+            }
+
+            values[index] = Convert.ToInt32(args[1], CultureInfo.InvariantCulture) != 0;
+        }
+
+        return Task.FromResult(PlcResult<bool[]>.Success(values));
+    }
+
     private object RequireComponent()
     {
         return _component ?? throw new InvalidOperationException("MX Component is not connected.");
@@ -306,6 +342,41 @@ public sealed class MitsubishiMxComponentPlcClient : PlcClientBase
                 for (var index = 0; index < count; index++)
                 {
                     values[index] = Convert.ToInt16(array.GetValue(index), CultureInfo.InvariantCulture);
+                }
+
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static bool TryExtractBoolArray(object? source, int count, out bool[] values)
+    {
+        values = new bool[count];
+
+        switch (source)
+        {
+            case bool[] booleans when booleans.Length >= count:
+                Array.Copy(booleans, values, count);
+                return true;
+            case short[] shorts when shorts.Length >= count:
+                for (var index = 0; index < count; index++)
+                {
+                    values[index] = shorts[index] != 0;
+                }
+
+                return true;
+            case int[] integers when integers.Length >= count:
+                for (var index = 0; index < count; index++)
+                {
+                    values[index] = integers[index] != 0;
+                }
+
+                return true;
+            case Array array when array.Length >= count:
+                for (var index = 0; index < count; index++)
+                {
+                    values[index] = Convert.ToInt32(array.GetValue(index), CultureInfo.InvariantCulture) != 0;
                 }
 
                 return true;
