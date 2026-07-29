@@ -1,54 +1,104 @@
 namespace Dreamine.PLC.Mitsubishi.MxComponent.Options;
 
 /// <summary>
-/// Provides Mitsubishi MX Component connection options.
+/// \if KO
+/// <para>Mitsubishi MX Component 연결 옵션을 제공합니다.</para>
+/// \endif
+/// \if EN
+/// <para>Provides Mitsubishi MX Component connection options.</para>
+/// \endif
 /// </summary>
 public sealed class MitsubishiMxComponentOptions
 {
     /// <summary>
-    /// Gets the default MX Component ProgID for the current process bitness.
+    /// \if KO
+    /// <para>현재 프로세스 비트 수에 맞는 기본 MX Component ProgID를 가져옵니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets the default MX Component ProgID for the current process bitness.</para>
+    /// \endif
     /// </summary>
     public static string DefaultProgId => Environment.Is64BitProcess
         ? "ActUtlType64.ActUtlWrap"
         : "ActUtlType.ActUtlType";
 
     /// <summary>
-    /// Gets or sets the MX Component COM ProgID.
+    /// \if KO
+    /// <para>MX Component COM ProgID를 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the MX Component COM ProgID.</para>
+    /// \endif
     /// </summary>
     public string ProgId { get; set; } = DefaultProgId;
 
     /// <summary>
-    /// Gets or sets the logical station number configured in MX Component.
+    /// \if KO
+    /// <para>MX Component에 구성된 논리 스테이션 번호를 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the logical station number configured in MX Component.</para>
+    /// \endif
     /// </summary>
     public int LogicalStationNumber { get; set; }
 
     /// <summary>
-    /// Gets or sets the Open method name.
+    /// \if KO
+    /// <para>연결 열기 COM 메서드 이름을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the COM method name used to open the connection.</para>
+    /// \endif
     /// </summary>
     public string OpenMethodName { get; set; } = "Open";
 
     /// <summary>
-    /// Gets or sets the Close method name.
+    /// \if KO
+    /// <para>연결 닫기 COM 메서드 이름을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the COM method name used to close the connection.</para>
+    /// \endif
     /// </summary>
     public string CloseMethodName { get; set; } = "Close";
 
     /// <summary>
-    /// Gets or sets the single-device read method name.
+    /// \if KO
+    /// <para>단일 장치 읽기 COM 메서드 이름을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the single-device read COM method name.</para>
+    /// \endif
     /// </summary>
     public string ReadDeviceMethodName { get; set; } = "GetDevice";
 
     /// <summary>
-    /// Gets or sets the single-device write method name.
+    /// \if KO
+    /// <para>단일 장치 쓰기 COM 메서드 이름을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the single-device write COM method name.</para>
+    /// \endif
     /// </summary>
     public string WriteDeviceMethodName { get; set; } = "SetDevice";
 
     /// <summary>
-    /// Gets or sets the block word read method name.
+    /// \if KO
+    /// <para>워드 블록 읽기 COM 메서드 이름을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the block-word read COM method name.</para>
+    /// \endif
     /// </summary>
     public string ReadDeviceBlock2MethodName { get; set; } = "ReadDeviceBlock2";
 
     /// <summary>
-    /// Gets or sets the block word write method name.
+    /// \if KO
+    /// <para>워드 블록 쓰기 COM 메서드 이름을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the block-word write COM method name.</para>
+    /// \endif
     /// </summary>
     public string WriteDeviceBlock2MethodName { get; set; } = "WriteDeviceBlock2";
 }
